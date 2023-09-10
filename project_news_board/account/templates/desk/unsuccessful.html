@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Неверный код{% endblock title %}
+{% block nav %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'desk:index' %}">Главная</a>
+        </div>
+    </nav>
+{% endblock nav %}
+{% block content %}
+<h3>Неверный код, повторите ввод!</h3>
+{% endblock content %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Сброс процесса регистрации{% endblock title %}
+{% block nav %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'desk:index' %}">Главная</a>
+        </div>
+    </nav>
+{% endblock nav %}
+{% block content %}
+<body>
+    <div class="container">
+    <form method="post" action="{% url 'account:reset' %}">
+        {% csrf_token %}
+        <p>Произошел сбой при регистрации. Возможно пользователь с таким именем уже существует.
+            Если Вы неудачно вводили код при сверке регистрации, рекомендуем сбросить прогресс...</p>
+        <p><input type="submit" value="Сброс"></p>
+    </form>
+    </div>
+</body>
+{% endblock content %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Подробно{% endblock title %}
+{% block content %}
+    <div class="container text-center mt-5">
+        <h1 class="p-sm-3">Отклик № {{reply.pk}}</h1>
+        <p class="p-sm-1">к объявлению "{{reply.post}}"</p>
+        <hr>
+        <a class="navbar-toggler" href="{% url 'desk:reply_delete' reply.pk %}">Удалить отклик</a>
+        {% if not reply.approved%}
+            <a class="navbar-toggler" href="{% url 'desk:reply_approve' reply.pk %}">Принять отклик</a>
+        {% endif %}
+        <hr>
+        <h4 class="p-sm-3">Автор {{reply.author}}</h4>
+        <h5 class="p-sm-3">Создано {{reply.created}}</h5>
+        <p class="p-sm-1">{{reply.content}}</p>
+    </div>
+{% endblock content %}

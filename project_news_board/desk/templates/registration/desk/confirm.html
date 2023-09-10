@@ -1,0 +1,25 @@
+{% extends 'default.html' %}
+{% block title %}Подтверждение регистрации{% endblock title %}
+{% block nav %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'desk:index' %}">Главная</a>
+        </div>
+    </nav>
+{% endblock nav %}
+{% block content %}
+<body>
+    <div class="container">
+    <form method="post" action="{% url 'confirm' generated_code.id %}">
+        {% csrf_token %}
+        <p>{{ usr.username }}, введите код подтверждения</p>
+        {{form.as_p}}
+        <input id="usr_name" type="hidden" name="name" value="{{ usr.username }}">
+        <label for="usr_code">Введите код: </label>
+        <input id="usr_code" type="text" name="code" placeholder="Ваш код" value="{{ code }}">
+        <p><input type="submit" value="Проверка"></p>
+    </form>
+    </div>
+</body>
+{% endblock content %}
+

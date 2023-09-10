@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Изменение объявления{% endblock title %}
+{% block content %}
+    <div class="container text-center mt-5">
+        <h1 class="p-sm-1">Изменение объявления № {{post.id}}</h1>
+        <h3 class="p-sm-1">от автора: {{user}}</h3>
+        <hr>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {{ form.image }}
+            {{ form.video }}
+        <input type="submit" value="Изменить"/>
+        </form>
+    </div>
+{% endblock content %}

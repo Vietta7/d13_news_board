@@ -1,0 +1,36 @@
+{% extends "desk/base.html" %}
+{% block title %}{{ post.title }}{% endblock %}
+{% block content %}
+    <h1>{{ post.title }}</h1>
+    <p class="date"> Опубликовано {{ post.publish }}  {{ post.author }} <strong>Категория {{ post.category }}</strong></p>
+    {{ post.body|linebreaks }}
+     <p>{{post.content|safe}}</p>
+
+        {% if post.image %}
+            <img src="{{ post.image.url }}" alt="{{ post.title }}" width="800" height="600">
+        {% endif %}
+
+        {% if post.video %}
+            <video width="800" height="600" controls>
+            <source src="{{ post.video.url }}" type="video/mp4">
+            Your browser does not support the video tag.
+            </video>
+        {% endif %}
+
+   <hr>
+        {% if post.author.name.username != user.username %}
+            <a class="navbar-toggler" href="{% url 'desk:reply' post.pk %}">Оставить отклик</a>
+        {% else %}
+            <a class="navbar-toggler" href="{% url 'desk:post_update' post.pk %}">Изменить свое объявление</a>
+            <a class="navbar-toggler" href="{% url 'desk:post_delete' post.pk %}">Удалить свое объявление</a>
+        {% endif %}
+        {% if user.is_authenticated and request.user.username == post.author.username %}
+        <a href="{% url 'desk:post_delete' post.id %}" class="btn btn-danger">Удалить пост</a>
+        <a href="{% url 'desk:post_update' post.id %}" class="btn btn-primary">Редактировать</a>
+        {% endif %}    
+    <div>
+    </div>
+    
+    
+    
+{% endblock %}

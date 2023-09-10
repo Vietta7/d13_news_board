@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="content-section">
+        <div class="media">
+            <div class="media-body">
+                <h2 class="accaunt-heading">{{ user.username }}</h2>
+                <p class="text-secondary">{{ user.email }}</p>
+            </div>
+            <h2>Мои посты2:</h2>
+            {% for post in posts %}
+            <div class="container">
+                <a class="row" href="{% url 'desk:post_detail' post.id %}" >{{ post.title }}</a>
+                {% for com in comments %}
+                <p class="comment">{{ com.body }} | {{ com.name }}</p>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock content %}

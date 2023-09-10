@@ -1,0 +1,59 @@
+{% extends 'desk/base.html' %}
+{% load cache %}
+{% block title %}Личный кабинет{% endblock title %}
+{% block nav %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'desk:index' %}">Главная</a>
+            {% if not user.username %}
+            <a class="nav-link active" href="{% url 'account:signup' %}">Регистрация</a>
+            <a class="nav-link active" href="{% url 'account:login' %}">Вход</a>
+            {% else %}
+
+            {% endif %}
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    {% if user.is_authenticated %}
+                    <a class="nav-link active" href="{% url 'desk:logout' %}">Выход</a>
+                    <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'desk:post_create'%}">Создать объявление</a></li>
+
+                    {% endif %}
+                    {% if not current_user.is_subscriber %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'desk:subscribe' %}">Подписаться на рассылку</a></li>
+                    {% else%}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'desk:unsubscribe' %}">Отписаться от рассылки</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">Текущий пользователь: {{user.username}}</div>
+    <div class="container">Подписка оформлена: {{current_user.is_subscriber|yesno:"Да, Нет, -"}}</div>
+{% endblock nav %}
+{% block content %}
+    <div class="container text-center mt-5">
+        <h1 class="p-sm-3">Отклики на объявления</h1>
+        <hr>
+        <div class="container text-center mt-5">
+        <table class="container">
+            <tr>
+                <td><h5 class="p-sm-3">Отклики</h5></td>
+                <td><h5 class="p-sm-3">Автор</h5></td>
+                <td><h5 class="p-sm-3">Дата создания</h5></td>
+                <td><h5 class="p-sm-3">Для объявления</h5></td>
+                <td><h5 class="p-sm-3">Одобрен</h5></td>
+            </tr>
+            {% for item in replies %}
+            <tr>
+                <td><h5 class="p-sm-3"><a href="{% url 'desk:reply_detail' item.id %}">{{item.content|truncatewords:4}}</a></h5></td>
+                <td><h5 class="p-sm-3">{{item.author}}</h5></td>
+                <td><h5 class="p-sm-3">{{item.created}}</h5></td>
+                <td><h5 class="p-sm-3"><a href="{% url 'desk:sorted_by_post' post_id=item.post.id %}">{{item.post}}</a></h5></td>
+                <td><h5 class="p-sm-3">{{item.approved|yesno:"Да, Нет, -"}}</h5></td>
+            </tr>
+            {% endfor %}
+        </table>
+        </div>
+    </div>
+{% endblock content %}
